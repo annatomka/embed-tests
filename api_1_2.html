@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Embed Api 1.1.0 Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+<main class="container">
+    <div class="player">
+        <iframe
+                width="640"
+                height="400"
+                id="player"
+                src="https://video.ibm.com/embed/recorded/105634719"
+                frameborder="0"
+                allowfullscreen
+                webkitallowfullscreen
+                scrolling="no"
+        >
+        </iframe>
+        <div class="controls">
+            <button disabled class="play-pause">play</button>
+            <button disabled class="fullscreen-toggle">fullscreen off</button>
+        </div>
+    </div>
+</main>
+
+<script src="api_1_2.js"></script>
+<script>
+	var playing = false;
+	var playPauseButton = document.querySelector('.play-pause');
+	var fullScreenButton = document.querySelector('.fullscreen-toggle');
+	var api = PlayerAPI('player');
+
+	api.addListener('playing', function(event, value) {
+		playing = value;
+		playPauseButton.innerText = playing ? 'Pause' : 'Play';
+	});
+
+	api.addListener('contentAvailable', function(event) {
+		playPauseButton.disabled = false;
+		fullScreenButton.disabled = false;
+	});
+	api.callMethod('cc', 3);
+</script>
+</body>
+</html>
